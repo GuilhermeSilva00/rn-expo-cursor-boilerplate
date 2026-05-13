@@ -1,0 +1,20 @@
+---
+description: Naming conventions for files, components, hooks and TypeScript code in Expo and React Native projects
+alwaysApply: false
+---
+
+# Naming
+
+```txt
+UserCard.tsx
+use-auth.ts
+auth.service.ts
+get-user.usecase.ts
+users.query.ts
+auth.context.tsx
+format-date.ts
+```
+
+- Use lowercase with hyphens for file names
+- Use PascalCase for components/types
+- Use camelCase for variables/functions

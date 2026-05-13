@@ -1,0 +1,19 @@
+---
+description: Navigation UI, headers, tabs and screen presentation guidelines for Expo Router and React Native projects
+alwaysApply: false
+---
+
+# Navigation UI
+
+- Use Expo Router for navigation
+- Keep route files lightweight
+- Keep business logic outside routes
+- Prefer `_layout.tsx` files for stacks and tabs
+- Prefer route groups for organization and clean URLs
+- Prefer Protected Routes for authentication flows
+- Prefer consistent headers and screen transitions
+- Respect safe area in navigation layouts
+- Prefer modal presentation for temporary flows
+- Keep tab navigation simple and predictable
+- Avoid deeply nested navigation structures
+- Ensure navigation gestures and back behavior feel natural

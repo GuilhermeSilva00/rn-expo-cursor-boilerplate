@@ -1,0 +1,19 @@
+---
+description: Import organization, dependency boundaries and alias conventions for TypeScript and React Native projects
+alwaysApply: false
+---
+
+# Imports
+
+- Prefer absolute imports using `@/`
+- Avoid deep relative imports and circular dependencies
+- Prefer named exports
+- Remove unused imports
+
+Order:
+
+1. React / React Native
+2. External libraries
+3. Internal imports
+4. Relative imports
+5. Styles and types

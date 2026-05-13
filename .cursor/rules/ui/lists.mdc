@@ -1,0 +1,18 @@
+---
+description: List rendering, virtualization and scrolling performance guidelines for React Native projects
+alwaysApply: false
+---
+
+# Lists
+
+- Prefer `LegendList` or `FlashList` over `FlatList` for large or performance-sensitive lists
+- Use `FlatList` only for simple and lightweight lists
+- Provide stable and unique keys for items
+- Avoid nested virtualized lists when possible
+- Prefer pagination and virtualization for large datasets
+- Use pull-to-refresh when the screen requires data refresh
+- Avoid expensive calculations inside `renderItem`
+- Avoid inline `renderItem` functions when possible
+- Prefer memoized list items for large datasets
+- Use estimated item sizes when supported
+- Keep scrolling smooth and responsive

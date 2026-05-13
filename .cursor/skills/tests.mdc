@@ -1,0 +1,156 @@
+---
+alwaysApply: false
+---
+
+Use `@testing-library/react-native` for component and hook testing.
+
+Prefer testing behavior over implementation details.
+
+Avoid:
+
+- testing internal state
+- testing private methods
+- snapshot-heavy testing
+
+Prefer:
+
+- user interactions
+- accessible queries
+- realistic rendering flows
+
+## Installation
+
+```bash
+npm install -D @testing-library/react-native jest jest-expo
+```
+
+## Basic Component Test
+
+```tsx
+import { render, screen } from "@testing-library/react-native";
+
+import { Button } from "@/components/button";
+
+describe("Button", () => {
+  it("renders correctly", () => {
+    render(<Button title="Save" />);
+
+    expect(screen.getByText("Save")).toBeTruthy();
+  });
+});
+```
+
+## User Interaction
+
+Prefer `userEvent` over `fireEvent` when possible.
+
+```tsx
+import { render, screen, userEvent } from "@testing-library/react-native";
+
+it("submits form", async () => {
+  const onSubmit = jest.fn();
+
+  const user = userEvent.setup();
+
+  render(<LoginForm onSubmit={onSubmit} />);
+
+  await user.type(screen.getByLabelText("Email"), "john@mail.com");
+
+  await user.press(
+    screen.getByRole("button", {
+      name: "Submit",
+    }),
+  );
+
+  expect(onSubmit).toHaveBeenCalled();
+});
+```
+
+## Hook Testing
+
+Use `renderHook` for custom hooks.
+
+```tsx
+import { act, renderHook } from "@testing-library/react-native";
+
+import { useCounter } from "@/hooks/use-counter";
+
+it("increments counter", () => {
+  const { result } = renderHook(() => useCounter());
+
+  act(() => {
+    result.current.increment();
+  });
+
+  expect(result.current.count).toBe(1);
+});
+```
+
+## Queries
+
+Prefer accessible queries.
+
+Priority:
+
+1. `getByRole`
+2. `getByLabelText`
+3. `getByText`
+4. `getByPlaceholderText`
+5. `getByTestId` as last resort
+
+```tsx
+screen.getByRole("button", {
+  name: "Continue",
+});
+```
+
+## Async Testing
+
+Use `findBy*` and `waitFor` for async UI.
+
+```tsx
+import { render, screen, waitFor } from "@testing-library/react-native";
+
+it("loads users", async () => {
+  render(<UsersScreen />);
+
+  expect(screen.getByText("Loading")).toBeTruthy();
+
+  await waitFor(() => {
+    expect(screen.getByText("John")).toBeTruthy();
+  });
+});
+```
+
+## Custom Render
+
+Prefer a shared render helper for providers.
+
+```tsx
+import { render } from "@testing-library/react-native";
+
+function Providers({ children }) {
+  return children;
+}
+
+export function renderWithProviders(component: React.ReactNode) {
+  return render(component, {
+    wrapper: Providers,
+  });
+}
+```
+
+## Best Practices
+
+- Test behavior instead of implementation
+- Prefer screen queries over container access
+- Keep tests small and focused
+- Avoid excessive mocking
+- Avoid snapshot-heavy testing
+- Prefer accessibility-first queries
+- Use `renderHook` for isolated hook testing
+- Use async queries for async UI
+- Prefer reusable render helpers
+  ::: ([callstack.github.io][1])
+
+[1]: https://callstack.github.io/react-native-testing-library/docs/api/misc/render-hook?utm_source=chatgpt.com "`renderHook` function - React Native Testing Library"

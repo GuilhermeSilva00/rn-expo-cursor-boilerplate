@@ -1,0 +1,318 @@
+---
+alwaysApply: false
+---
+
+# Animations
+
+Use Reanimated v4. Avoid React Native's built-in Animated API.
+
+Prefer animations running on the UI thread using worklets.
+
+Reanimated v4 requires the React Native New Architecture (Fabric).
+
+## Entering and Exiting Animations
+
+Use `Animated.View` with entering and exiting animations.
+
+```tsx
+import Animated, {
+  FadeIn,
+  FadeOut,
+  LinearTransition,
+} from "react-native-reanimated";
+
+function App() {
+  return (
+    <Animated.View
+      entering={FadeIn}
+      exiting={FadeOut}
+      layout={LinearTransition}
+    />
+  );
+}
+```
+
+Predefined families:
+
+- Fade
+- Slide
+- Zoom
+- Bounce
+- Flip
+- Stretch
+- Roll
+- Rotate
+- LightSpeed
+- Pinwheel
+
+Directional variants:
+
+- `FadeInRight`
+- `FadeInLeft`
+- `FadeInUp`
+- `FadeInDown`
+
+## On-Scroll Animations
+
+Prefer Reanimated hooks for performant scroll-driven animations.
+
+```tsx
+import Animated, {
+  useAnimatedRef,
+  useScrollViewOffset,
+  useAnimatedStyle,
+  interpolate,
+} from "react-native-reanimated";
+
+function Page() {
+  const ref = useAnimatedRef();
+  const scroll = useScrollViewOffset(ref);
+
+  const style = useAnimatedStyle(() => ({
+    opacity: interpolate(scroll.value, [0, 30], [0, 1], "clamp"),
+  }));
+
+  return (
+    <Animated.ScrollView ref={ref}>
+      <Animated.View style={style} />
+    </Animated.ScrollView>
+  );
+}
+```
+
+## Layout Transitions
+
+Animate layout and position changes automatically.
+
+```tsx
+import Animated, { LinearTransition } from "react-native-reanimated";
+
+<Animated.View layout={LinearTransition}>
+  {items.map((item) => (
+    <Item key={item.id} {...item} />
+  ))}
+</Animated.View>;
+```
+
+Available transitions:
+
+- `LinearTransition`
+- `SequencedTransition`
+- `FadingTransition`
+- `JumpingTransition`
+- `CurvedTransition`
+- `EntryExitTransition`
+
+Prefer `LinearTransition` over deprecated `Layout`.
+
+## Customizing Animations
+
+```tsx
+<Animated.View
+  entering={FadeInDown.duration(500).delay(200)}
+  exiting={FadeOut.duration(300)}
+/>
+```
+
+### Modifiers
+
+```tsx
+FadeIn.duration(300);
+
+FadeIn.delay(100);
+
+FadeIn.springify();
+
+FadeIn.springify().damping(15).stiffness(100);
+
+FadeIn.easing(Easing.bezier(0.25, 0.1, 0.25, 1));
+
+FadeInDown.duration(400).delay(200).springify();
+```
+
+Do not mix:
+
+- time-based modifiers
+- spring-based modifiers
+
+## Shared Values
+
+Use shared values for imperative animations.
+
+```tsx
+import {
+  useSharedValue,
+  withSpring,
+  withTiming,
+  useAnimatedStyle,
+} from "react-native-reanimated";
+
+const offset = useSharedValue(0);
+
+offset.value = withSpring(100);
+
+offset.value = withTiming(100, {
+  duration: 300,
+});
+
+const style = useAnimatedStyle(() => ({
+  transform: [
+    {
+      translateX: offset.value,
+    },
+  ],
+}));
+```
+
+## Gesture Animations
+
+Combine Reanimated with Gesture Handler.
+
+```tsx
+import { Gesture, GestureDetector } from "react-native-gesture-handler";
+
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
+} from "react-native-reanimated";
+
+function DraggableBox() {
+  const translateX = useSharedValue(0);
+  const translateY = useSharedValue(0);
+
+  const gesture = Gesture.Pan()
+    .onUpdate((e) => {
+      translateX.value = e.translationX;
+      translateY.value = e.translationY;
+    })
+    .onEnd(() => {
+      translateX.value = withSpring(0);
+      translateY.value = withSpring(0);
+    });
+
+  const style = useAnimatedStyle(() => ({
+    transform: [
+      { translateX: translateX.value },
+      { translateY: translateY.value },
+    ],
+  }));
+
+  return (
+    <GestureDetector gesture={gesture}>
+      <Animated.View style={[styles.box, style]} />
+    </GestureDetector>
+  );
+}
+```
+
+## Keyboard Animations
+
+Prefer animated keyboard-aware layouts.
+
+```tsx
+import Animated, {
+  useAnimatedKeyboard,
+  useAnimatedStyle,
+} from "react-native-reanimated";
+
+function KeyboardAwareView() {
+  const keyboard = useAnimatedKeyboard();
+
+  const style = useAnimatedStyle(() => ({
+    paddingBottom: keyboard.height.value,
+  }));
+
+  return <Animated.View style={style}>{/* content */}</Animated.View>;
+}
+```
+
+## Keyframe Animations
+
+Use keyframes for multi-step animations.
+
+```tsx
+import { Keyframe, Easing } from "react-native-reanimated";
+
+const enteringAnimation = new Keyframe({
+  0: {
+    opacity: 0,
+    transform: [{ scale: 0.5 }, { rotate: "-45deg" }],
+  },
+
+  50: {
+    opacity: 1,
+    transform: [{ scale: 1.2 }, { rotate: "0deg" }],
+    easing: Easing.out(Easing.quad),
+  },
+
+  100: {
+    transform: [{ scale: 1 }, { rotate: "0deg" }],
+  },
+});
+
+<Animated.View entering={enteringAnimation.duration(600)} />;
+```
+
+Rules:
+
+- Keyframe `0` is required
+- Keep transform order consistent
+- Avoid easing on keyframe `0`
+
+## Animated Lists
+
+Use animated FlatLists for layout changes.
+
+```tsx
+<Animated.FlatList
+  data={data}
+  renderItem={renderItem}
+  itemLayoutAnimation={LinearTransition}
+/>
+```
+
+Rules:
+
+- Works only with single-column lists
+- Prefer stable keys
+- Disable with `undefined` when necessary
+
+## LayoutAnimationConfig
+
+Skip entering or exiting animations for subtrees.
+
+```tsx
+import { LayoutAnimationConfig } from "react-native-reanimated";
+
+<LayoutAnimationConfig skipEntering skipExiting>
+  {children}
+</LayoutAnimationConfig>;
+```
+
+## Shared Element Transitions
+
+Experimental feature.
+
+```tsx
+<Animated.Image sharedTransitionTag="hero-image" />
+```
+
+Rules:
+
+- Requires native stack navigation
+- Tags must be unique
+- Not recommended for production yet
+
+## Performance and Gotchas
+
+- Prefer transforms over width/height animations
+- Keep animations under 300ms when possible
+- Prefer spring animations for natural movement
+- Use `interpolate(..., "clamp")` for bounded values
+- Avoid expensive work inside worklets
+- Define animation builders outside components or memoize them
+- Reanimated uses `nativeID` internally for entering animations
+- Prefer static colors instead of `PlatformColor`
+- Use `collapsable={false}` when parent removal breaks exiting animations
+- Spring layout animations are not supported on web

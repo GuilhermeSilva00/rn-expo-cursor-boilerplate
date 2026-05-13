@@ -1,0 +1,33 @@
+---
+description: Project structure, architecture boundaries and layer responsibilities for Expo and React Native projects
+alwaysApply: false
+---
+
+# Structure
+
+```txt
+app/         → Expo Router routes
+assets/      → static assets
+components/  → reusable UI
+constants/   → constants and config
+contexts/    → global state
+hooks/       → UI/state integration
+queries/     → React Query definitions
+services/    → external communication
+usecases/    → business logic
+utils/       → utility functions
+```
+
+# Architecture
+
+- Keep routes lightweight
+- Avoid API calls inside screens/components
+- Prefer React Query for async/server state
+- Use Context only for global state
+- Avoid heavy logic inside hooks
+- Keep services focused on external communication
+- Keep usecases framework-agnostic
+
+```
+Screen/Route -> Hook -> Query -> Usecase -> Service
+```

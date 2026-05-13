@@ -1,0 +1,17 @@
+---
+description: Animation, gestures and UI thread performance guidelines for React Native projects
+alwaysApply: false
+---
+
+# Animations
+
+- Prefer `react-native-reanimated` for animations and gestures
+- Prefer Reanimated v4 with the New Architecture
+- Avoid React Native `Animated` API for new features
+- Prefer animations running on the UI thread
+- Prefer worklets for performance-sensitive animations
+- Prefer transform animations over layout animations when possible
+- Keep animations smooth, responsive and lightweight
+- Prefer entering and exiting animations for state transitions
+- Avoid expensive calculations during animations
+- Keep animation logic isolated and reusable

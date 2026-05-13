@@ -1,0 +1,15 @@
+---
+description: User feedback, loading states and interaction response guidelines for React Native projects
+alwaysApply: false
+---
+
+# Feedback
+
+- Provide loading, success and error feedback for async actions
+- Prefer skeletons or progressive loading over blank screens
+- Avoid blocking the UI unnecessarily
+- Prefer visual feedback for presses and interactions
+- Prefer haptic feedback for important interactions
+- Prefer `sonner-native` for toast notifications
+- Keep feedback fast, lightweight and non-intrusive
+- Ensure empty and error states are always handled

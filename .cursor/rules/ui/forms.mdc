@@ -1,0 +1,17 @@
+---
+description: Form state, validation and input handling guidelines for React Native projects
+alwaysApply: false
+---
+
+# Forms
+
+- Prefer `react-hook-form` for form state management
+- Prefer `zod` for schema validation
+- Keep forms keyboard-aware
+- Prevent keyboard overlap on inputs
+- Keep focused inputs visible while typing
+- Show validation feedback near inputs
+- Disable submit actions during async operations
+- Provide loading, error and success feedback
+- Prefer controlled and reusable form components
+- Keep form logic isolated from presentation components

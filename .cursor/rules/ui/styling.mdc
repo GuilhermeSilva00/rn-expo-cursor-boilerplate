@@ -1,0 +1,17 @@
+---
+description: Styling conventions, layout patterns and design token guidelines for React Native projects
+alwaysApply: false
+---
+
+# Styling
+
+- Follow a single styling system consistently
+- Prefer `StyleSheet.create` for styles
+- Avoid large inline styles
+- Keep styles close to components
+- Prefer reusable spacing, radius and color tokens
+- Avoid hardcoded colors and spacing values
+- Prefer flex layouts over fixed dimensions
+- Prefer semantic styling over one-off values
+- Support light and dark themes
+- Keep styling predictable and maintainable

@@ -1,0 +1,86 @@
+---
+alwaysApply: false
+---
+
+# Expo Secure Store
+
+Use `expo-secure-store` for sensitive data only.
+
+Examples:
+
+- auth tokens
+- refresh tokens
+- session identifiers
+- sensitive credentials
+
+Avoid using Secure Store for:
+
+- large data
+- cache
+- lists
+- React Query persistence
+- non-sensitive preferences
+
+Prefer MMKV or AsyncStorage for non-sensitive local data.
+
+## Installation
+
+```bash
+npx expo install expo-secure-store
+```
+
+## Save Data
+
+```tsx
+import * as SecureStore from "expo-secure-store";
+
+await SecureStore.setItemAsync("token", accessToken);
+```
+
+## Read Data
+
+```tsx
+import * as SecureStore from "expo-secure-store";
+
+const token = await SecureStore.getItemAsync("token");
+```
+
+## Remove Data
+
+```tsx
+import * as SecureStore from "expo-secure-store";
+
+await SecureStore.deleteItemAsync("token");
+```
+
+## Auth Storage Service
+
+Prefer centralizing secure storage access.
+
+```tsx
+import * as SecureStore from "expo-secure-store";
+
+const TOKEN_KEY = "access-token";
+
+export async function saveToken(token: string) {
+  await SecureStore.setItemAsync(TOKEN_KEY, token);
+}
+
+export async function getToken() {
+  return SecureStore.getItemAsync(TOKEN_KEY);
+}
+
+export async function removeToken() {
+  await SecureStore.deleteItemAsync(TOKEN_KEY);
+}
+```
+
+## Best Practices
+
+- Prefer Secure Store for auth/session data only
+- Keep storage access centralized
+- Avoid scattering Secure Store calls across the app
+- Remove tokens on logout
+- Prefer short-lived access tokens when possible
+- Never store sensitive data inside AsyncStorage
+- Avoid storing large objects in Secure Store

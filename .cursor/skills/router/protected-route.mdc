@@ -1,0 +1,97 @@
+---
+alwaysApply: false
+---
+
+# Protected Routes
+
+Use Expo Router `*.Protected` for authentication and authorization flows.
+
+- Prefer Protected Routes over manual redirects
+- Keep auth logic centralized
+- Prefer route groups for authenticated areas
+- Avoid duplicating screens across protected groups
+- Remove inaccessible screens from navigation
+
+## Stack Example
+
+```tsx
+import { Stack } from "expo-router";
+
+export default function Layout() {
+  const isAuthenticated = true;
+
+  return (
+    <Stack>
+      <Stack.Protected guard={!isAuthenticated}>
+        <Stack.Screen name="login" />
+      </Stack.Protected>
+
+      <Stack.Protected guard={isAuthenticated}>
+        <Stack.Screen name="(app)" />
+      </Stack.Protected>
+    </Stack>
+  );
+}
+```
+
+## Route Structure
+
+```txt
+app/
+  _layout.tsx
+
+  login.tsx
+
+  (app)/
+    _layout.tsx
+    index.tsx
+    profile.tsx
+```
+
+## Nested Protection
+
+Use nested guards for roles and permissions.
+
+```tsx
+<Stack.Protected guard={isAuthenticated}>
+  <Stack.Protected guard={isAdmin}>
+    <Stack.Screen name="admin" />
+  </Stack.Protected>
+
+  <Stack.Screen name="profile" />
+</Stack.Protected>
+```
+
+## Tabs Example
+
+```tsx
+import { Tabs } from "expo-router";
+
+export default function Layout() {
+  const isAuthenticated = true;
+
+  return (
+    <Tabs>
+      <Tabs.Screen name="index" />
+
+      <Tabs.Protected guard={isAuthenticated}>
+        <Tabs.Screen name="profile" />
+      </Tabs.Protected>
+
+      <Tabs.Protected guard={!isAuthenticated}>
+        <Tabs.Screen name="login" />
+      </Tabs.Protected>
+    </Tabs>
+  );
+}
+```
+
+## Best Practices
+
+- Prefer a single auth source of truth
+- Prefer context or store for auth state
+- Keep guards simple and predictable
+- Prefer automatic fallback navigation
+- Avoid manual navigation guards when possible
+- Protected routes are client-side only
+- Do not rely on protected routes for backend security

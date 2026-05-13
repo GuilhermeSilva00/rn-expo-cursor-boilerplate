@@ -1,0 +1,14 @@
+---
+description: Core architectural principles and engineering guidelines for Expo and React Native projects
+alwaysApply: true
+---
+
+## Core Principles
+
+- Prefer simple, maintainable and scalable solutions
+- Avoid overengineering and unnecessary abstractions
+- Keep files small and focused
+- Keep business logic outside UI
+- Prefer reusable hooks, services and utilities
+- Use only the layers necessary for the feature
+- Prefer consistency and readability

@@ -1,0 +1,50 @@
+---
+description: UI composition, responsiveness, accessibility and interaction guidelines for React Native components
+alwaysApply: false
+---
+
+# UI Core
+
+## Components
+
+- Prefer small and reusable components
+- Prefer composition over prop-heavy abstractions
+- Keep business logic outside UI components
+- Avoid giant screens and components
+
+## Layout
+
+- Prefer responsive and flexible layouts
+- Avoid hardcoded dimensions when possible
+- Ensure layouts support small screens and font scaling
+
+## Safe Area
+
+- Respect safe area insets on all screens
+- Avoid content behind status and navigation bars
+- Prefer `react-native-safe-area-context`
+
+## Interaction
+
+- Prefer `Pressable` for interactive elements
+- Provide visual feedback for interactions
+- Ensure accessible touch targets
+
+## Inputs and Keyboard
+
+- Prevent keyboard overlap on inputs and forms
+- Keep focused inputs visible while typing
+- Handle keyboard behavior consistently across platforms
+- Prefer keyboard-aware layouts when necessary
+
+## Accessibility
+
+- Prefer semantic and accessible components
+- Support screen readers and dynamic font sizes
+- Avoid interaction-only communication
+
+## Performance
+
+- Avoid unnecessary re-renders
+- Avoid expensive calculations inside components
+- Prefer memoization only when necessary

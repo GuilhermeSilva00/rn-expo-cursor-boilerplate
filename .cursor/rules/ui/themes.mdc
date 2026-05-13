@@ -1,0 +1,15 @@
+---
+description: Theme management, dark mode and semantic color guidelines for React Native projects
+alwaysApply: false
+---
+
+# Themes
+
+- Support light and dark themes whenever possible
+- Avoid hardcoded colors inside components
+- Prefer semantic color tokens over raw color values
+- Keep theme definitions separated by theme mode
+- Centralize colors, spacing and design tokens
+- Keep theme usage consistent across the application
+- Ensure proper contrast and readability in both themes
+- Prefer theme-aware components and styles
