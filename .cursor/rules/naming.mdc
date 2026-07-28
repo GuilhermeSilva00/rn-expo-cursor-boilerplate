@@ -6,7 +6,7 @@ alwaysApply: false
 # Naming
 
 ```txt
-UserCard.tsx
+user-card.tsx
 use-auth.ts
 auth.service.ts
 get-user.usecase.ts
