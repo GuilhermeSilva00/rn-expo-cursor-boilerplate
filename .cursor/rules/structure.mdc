@@ -14,7 +14,7 @@ contexts/    → global state
 hooks/       → UI/state integration
 queries/     → React Query definitions
 services/    → external communication
-usecases/    → business logic
+usecases/    → business logic and orchestration (optional)
 utils/       → utility functions
 ```
 
@@ -27,7 +27,32 @@ utils/       → utility functions
 - Avoid heavy logic inside hooks
 - Keep services focused on external communication
 - Keep usecases framework-agnostic
+- Only introduce a usecase when business rules or orchestration are required
 
+## Recommended flow
+
+Simple operations:
+
+```txt
+Screen/Route
+    ↓
+Hook
+    ↓
+Query
+    ↓
+Service
 ```
-Screen/Route -> Hook -> Query -> Usecase -> Service
+
+Operations with business logic:
+
+```txt
+Screen/Route
+    ↓
+Hook
+    ↓
+Query
+    ↓
+Usecase
+    ↓
+Service
 ```
