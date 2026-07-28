@@ -8,10 +8,10 @@ alwaysApply: false
 ```txt
 user-card.tsx
 use-auth.ts
-auth.service.ts
+auth-service.ts
 get-user.usecase.ts
-users.query.ts
-auth.context.tsx
+users-query.ts
+auth-context.tsx
 format-date.ts
 ```
 
